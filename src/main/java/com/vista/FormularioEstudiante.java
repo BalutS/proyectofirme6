@@ -117,10 +117,10 @@ public class FormularioEstudiante extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
+        // Initialize components (already declared as fields)
         lblTitulo = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
-        lblPlaceholder1 = new javax.swing.JLabel();
-        lblPlaceholder2 = new javax.swing.JLabel();
+        // lblPlaceholder1 and lblPlaceholder2 are omitted as they are not used
         lblEdad = new javax.swing.JLabel();
         lblCedula = new javax.swing.JLabel();
         lblCodigo = new javax.swing.JLabel();
@@ -136,20 +136,22 @@ public class FormularioEstudiante extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Nuevo Estudiante");
 
-        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        // Configure component properties
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); 
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Agregar Estudiante");
 
         lblNombre.setText("Nombre:");
-
+        lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblEdad.setText("Edad:");
-
+        lblEdad.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCedula.setText("Cédula:");
-
+        lblCedula.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCodigo.setText("Código:");
-
+        lblCodigo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCurso.setText("Curso:");
-
+        lblCurso.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,80 +166,69 @@ public class FormularioEstudiante extends javax.swing.JDialog {
             }
         });
 
+        // GroupLayout setup
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
+
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre)
-                    .addComponent(lblEdad)
-                    .addComponent(lblCedula)
-                    .addComponent(lblCodigo)
-                    .addComponent(lblCurso))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(txtEdad)
-                    .addComponent(txtCedula)
-                    .addComponent(txtCodigo)
-                    .addComponent(cmbCursos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(50, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96))
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap(20, Short.MAX_VALUE) // Outer padding - leading
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addComponent(txtEdad)
+                        .addComponent(txtCedula)
+                        .addComponent(txtCodigo)
+                        .addComponent(cmbCursos, 0, 200, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(20, Short.MAX_VALUE)) // Outer padding - trailing
         );
+        
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnGuardar, btnCancelar});
+
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap(20, Short.MAX_VALUE) // Outer padding - top
                 .addComponent(lblTitulo)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEdad)
                     .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCedula)
                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigo)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCurso)
                     .addComponent(cmbCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar))
-                .addGap(30, 30, 30))
+                .addContainerGap(20, Short.MAX_VALUE)) // Outer padding - bottom
         );
-
-        // jLabel3 and jLabel4 were placeholders in the original file, renamed for clarity if they were meant for layout
-        // If they were actual labels, their text would need to be set.
-        // For now, assuming they were part of NetBeans' layout generation and can be omitted if not used.
-        // Variables declaration from original, adapted to new names
-        // jLabel1 -> lblTitulo
-        // jLabel2 -> lblNombre
-        // jLabel5 -> lblEdad
-        // jLabel6 -> lblCedula
-        // jLabel7 -> lblCodigo
-        // jLabel8 -> lblCurso
-
         pack();
     }// </editor-fold>                        
 
@@ -245,14 +236,13 @@ public class FormularioEstudiante extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<Curso> cmbCursos;
-    private javax.swing.JLabel lblTitulo;      // Renamed from jLabel1
-    private javax.swing.JLabel lblNombre;      // Renamed from jLabel2
-    private javax.swing.JLabel lblPlaceholder1; // Was jLabel3
-    private javax.swing.JLabel lblPlaceholder2; // Was jLabel4
-    private javax.swing.JLabel lblEdad;        // Renamed from jLabel5
-    private javax.swing.JLabel lblCedula;      // Renamed from jLabel6
-    private javax.swing.JLabel lblCodigo;      // Renamed from jLabel7
-    private javax.swing.JLabel lblCurso;       // Renamed from jLabel8
+    private javax.swing.JLabel lblTitulo;      
+    private javax.swing.JLabel lblNombre;      
+    // lblPlaceholder1 and lblPlaceholder2 are not used.
+    private javax.swing.JLabel lblEdad;        
+    private javax.swing.JLabel lblCedula;      
+    private javax.swing.JLabel lblCodigo;      
+    private javax.swing.JLabel lblCurso;       
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtEdad;
