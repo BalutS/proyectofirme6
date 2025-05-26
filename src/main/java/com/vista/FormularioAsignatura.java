@@ -60,55 +60,58 @@ public class FormularioAsignatura extends JDialog {
     }
 
     private void setupLayout() {
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        // Create labels (fields are already initialized in initComponents)
+        JLabel lblDialogTitle = new JLabel("Crear Asignatura");
+        lblDialogTitle.setFont(new Font("Arial", Font.BOLD, 16));
+        lblDialogTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Title
-        JLabel lblTitle = new JLabel("Crear Asignatura");
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 16));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        add(lblTitle, gbc);
+        JLabel lblNombreAsignaturaText = new JLabel("Nombre Asignatura:");
+        lblNombreAsignaturaText.setHorizontalAlignment(SwingConstants.RIGHT);
+        JLabel lblCursoText = new JLabel("Seleccionar Curso:");
+        lblCursoText.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        // Reset gridwidth
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.WEST;
+        // GroupLayout setup
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
 
-        // Subject Name Label
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        add(new JLabel("Nombre Asignatura:"), gbc);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
 
-        // Subject Name TextField
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        add(txtNombreAsignatura, gbc);
+        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+            .addComponent(lblDialogTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombreAsignaturaText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCursoText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNombreAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(cmbCursos, 0, 200, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Push to center
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)) // Push to center
+        );
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnGuardar, btnCancelar});
 
-        // Course Label
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        add(new JLabel("Seleccionar Curso:"), gbc);
 
-        // Course ComboBox
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        add(cmbCursos, gbc);
-
-        // Buttons Panel
-        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonsPanel.add(btnGuardar);
-        buttonsPanel.add(btnCancelar);
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.anchor = GridBagConstraints.CENTER;
-        add(buttonsPanel, gbc);
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addComponent(lblDialogTitle)
+            .addGap(18) // Gap after title
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lblNombreAsignaturaText)
+                .addComponent(txtNombreAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) // Gap between rows
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lblCursoText)
+                .addComponent(cmbCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(25) // Gap before buttons
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnGuardar)
+                .addComponent(btnCancelar))
+        );
     }
 
     private void guardarAsignatura() {

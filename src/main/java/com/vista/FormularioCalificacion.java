@@ -44,53 +44,73 @@ public class FormularioCalificacion extends JDialog {
     }
 
     private void initComponents() {
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8); // Increased insets for more spacing
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.WEST;
-
-        // Nombre Actividad
-        gbc.gridx = 0; gbc.gridy = 0;
-        add(new JLabel("Nombre Actividad:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 0;
+        // Initialize fields (already declared)
         txtNombreCalificacion = new JTextField(20);
-        add(txtNombreCalificacion, gbc);
-
-        // Nota
-        gbc.gridx = 0; gbc.gridy = 1;
-        add(new JLabel("Nota (0.0 - 5.0):"), gbc);
-        gbc.gridx = 1; gbc.gridy = 1;
-        txtNota = new JTextField(5); // Smaller field for nota
-        add(txtNota, gbc);
-
-        // Periodo
-        gbc.gridx = 0; gbc.gridy = 2;
-        add(new JLabel("Periodo (1-4):"), gbc);
-        gbc.gridx = 1; gbc.gridy = 2;
-        txtPeriodo = new JTextField(5); // Smaller field for periodo
-        add(txtPeriodo, gbc);
-
-        // Fecha
-        gbc.gridx = 0; gbc.gridy = 3;
-        add(new JLabel("Fecha (dd/MM/yyyy):"), gbc);
-        gbc.gridx = 1; gbc.gridy = 3;
+        txtNota = new JTextField(5);
+        txtPeriodo = new JTextField(5);
         txtFecha = new JTextField(10);
         txtFecha.setText(LocalDate.now().format(DATE_FORMATTER)); // Default to current date
-        add(txtFecha, gbc);
-
-        // Buttons panel
-        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0)); // Centered buttons with spacing
+        
         btnGuardar = new JButton("Guardar");
         btnCancelar = new JButton("Cancelar");
-        panelBotones.add(btnGuardar);
-        panelBotones.add(btnCancelar);
 
-        gbc.gridx = 0; gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER; // Center the panel
-        gbc.fill = GridBagConstraints.NONE; // Don't stretch the panel
-        add(panelBotones, gbc);
+        // Create JLabels for the form
+        JLabel lblNombreActividad = new JLabel("Nombre Actividad:");
+        lblNombreActividad.setHorizontalAlignment(SwingConstants.RIGHT);
+        JLabel lblNota = new JLabel("Nota (0.0 - 5.0):");
+        lblNota.setHorizontalAlignment(SwingConstants.RIGHT);
+        JLabel lblPeriodo = new JLabel("Periodo (1-4):");
+        lblPeriodo.setHorizontalAlignment(SwingConstants.RIGHT);
+        JLabel lblFecha = new JLabel("Fecha (dd/MM/yyyy):");
+        lblFecha.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        // GroupLayout setup
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(lblNombreActividad)
+                .addComponent(lblNota)
+                .addComponent(lblPeriodo)
+                .addComponent(lblFecha))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(txtNombreCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnGuardar, btnCancelar});
+
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lblNombreActividad)
+                .addComponent(txtNombreCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lblNota)
+                .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lblPeriodo)
+                .addComponent(txtPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lblFecha)
+                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(25) // Gap before buttons
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnGuardar)
+                .addComponent(btnCancelar))
+        );
     }
 
     private void configurarEventos() {

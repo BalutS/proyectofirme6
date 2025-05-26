@@ -26,6 +26,7 @@ public class MenuEstudiante extends JFrame {
     }
 
     private void initComponents() {
+        // Initialize components (fields are already declared)
         areaReporte = new JTextArea();
         areaReporte.setEditable(false);
         areaReporte.setMargin(new Insets(10, 10, 10, 10));
@@ -34,14 +35,35 @@ public class MenuEstudiante extends JFrame {
         btnVerMisNotas = new JButton("Ver Todas Mis Notas Detalladas");
         btnCerrarSesion = new JButton("Cerrar Sesión");
 
-        // Layout
-        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Center buttons with spacing
-        panelBotones.add(btnVerMisNotas);
-        panelBotones.add(btnCerrarSesion);
+        // GroupLayout setup
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
 
-        setLayout(new BorderLayout(0,10)); // Add vertical gap
-        add(scrollPaneReporte, BorderLayout.CENTER);
-        add(panelBotones, BorderLayout.SOUTH);
+        // Horizontal Group
+        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+            .addComponent(scrollPaneReporte, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE) // Adjust size as needed
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Push to center
+                .addComponent(btnVerMisNotas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCerrarSesion)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)) // Push to center
+        );
+        layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {btnVerMisNotas, btnCerrarSesion});
+
+
+        // Vertical Group
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addComponent(scrollPaneReporte, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE) // Adjust size as needed
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) // Gap before buttons
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnVerMisNotas)
+                .addComponent(btnCerrarSesion))
+        );
+        
+        pack(); // Add pack() here
     }
 
     private void configurarVentana() {

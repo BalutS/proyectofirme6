@@ -34,34 +34,69 @@ public class MenuDocente extends javax.swing.JFrame {
     }
 
     private void initComponents() {
-        // Main info area
+        // Initialize components (fields are already declared)
         areaInfoCursoEstudiantes = new JTextArea();
         areaInfoCursoEstudiantes.setEditable(false);
         areaInfoCursoEstudiantes.setMargin(new Insets(10, 10, 10, 10));
         JScrollPane scrollPaneInfo = new JScrollPane(areaInfoCursoEstudiantes);
 
-        // Controls panel for selections and actions
-        JPanel panelControles = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10)); // Added some spacing
         cmbEstudiantes = new JComboBox<>();
         cmbAsignaturas = new JComboBox<>();
         btnAgregarCalificacion = new JButton("Agregar Calificación");
-
-        panelControles.add(new JLabel("Estudiante:"));
-        panelControles.add(cmbEstudiantes);
-        panelControles.add(new JLabel("Asignatura:"));
-        panelControles.add(cmbAsignaturas);
-        panelControles.add(btnAgregarCalificacion);
-
-        // South panel for session button
-        JPanel panelSur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnCerrarSesion = new JButton("Cerrar Sesión");
-        panelSur.add(btnCerrarSesion);
 
-        // Layout setup
-        setLayout(new BorderLayout(0, 10)); // Added vertical gap
-        add(scrollPaneInfo, BorderLayout.CENTER);
-        add(panelControles, BorderLayout.NORTH); // Changed to NORTH for better conventional layout
-        add(panelSur, BorderLayout.SOUTH);
+        // Create JLabels for the controls
+        JLabel lblEstudiante = new JLabel("Estudiante:");
+        JLabel lblAsignatura = new JLabel("Asignatura:");
+
+        // GroupLayout setup
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        // Horizontal Group
+        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lblEstudiante)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18)
+                .addComponent(lblAsignatura)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18)
+                .addComponent(btnAgregarCalificacion)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)) // Pushes to left
+            .addComponent(scrollPaneInfo) // Spans full width
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup() // For btnCerrarSesion
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCerrarSesion))
+        );
+        
+        // Ensure btnAgregarCalificacion and btnCerrarSesion have reasonable minimum sizes if needed
+        // layout.linkSize(SwingConstants.HORIZONTAL, btnAgregarCalificacion, btnCerrarSesion);
+
+
+        // Vertical Group
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lblEstudiante)
+                .addComponent(cmbEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblAsignatura)
+                .addComponent(cmbAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgregarCalificacion))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) // Gap
+            .addComponent(scrollPaneInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE) // Main area, grows
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) // Gap
+            .addComponent(btnCerrarSesion)
+        );
+        
+        // pack(); // pack() is called after this in the constructor sequence via configurarVentana -> setSize
+                 // Actually, setSize is in configurarVentana, pack() is not explicitly called there.
+                 // It's better to call pack() here or in the constructor after all setup.
+                 // For this refactor, let's add pack() at the end of initComponents.
+        pack(); 
     }
 
     private void configurarVentana() {
