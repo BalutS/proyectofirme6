@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author river
  */
-public class Asignatura {
+public class Asignatura implements Descriptible {
     private String nombre;
     private ArrayList<Calificacion> calificaciones;
 
@@ -24,15 +24,22 @@ public class Asignatura {
     }
     
     public String listarCalificaiones () {
-        String lis = "";
-        for (Calificacion calificacion : getCalificaciones()) {
-            lis += calificacion.toString() + "\n";
+        StringBuilder lis = new StringBuilder();
+        if (getCalificaciones().isEmpty()) {
+            lis.append("  - Sin calificaciones registradas.\n");
+        } else {
+            for (Calificacion calificacion : getCalificaciones()) {
+                lis.append("  - ").append(calificacion.toString()).append("\n");
+            }
         }
-        return lis;
+        return lis.toString();
     }
     
     public float promedio(){
         float sum = 0;
+        if (calificaciones == null || calificaciones.isEmpty()) {
+            return 0; // Avoid division by zero
+        }
         for (Calificacion calificacion : calificaciones) {
             sum += calificacion.getNota();
         }
@@ -41,7 +48,9 @@ public class Asignatura {
 
     @Override
     public String toString() {
-        return "Asignatura{" + "nombre=" + nombre + ", calificaciones=" + promedio() + '}';
+        // Using only the name for JComboBox display, as per later requirements.
+        // Original: "Asignatura{" + "nombre=" + nombre + ", calificaciones=" + promedio() + '}';
+        return nombre; 
     }
     
     
@@ -64,6 +73,9 @@ public class Asignatura {
      * @return the calificaciones
      */
     public ArrayList<Calificacion> getCalificaciones() {
+        if (this.calificaciones == null) {
+            this.calificaciones = new ArrayList<>(); // Defensive initialization
+        }
         return calificaciones;
     }
 
@@ -72,5 +84,18 @@ public class Asignatura {
      */
     public void setCalificaciones(ArrayList<Calificacion> calificaciones) {
         this.calificaciones = calificaciones;
+    }
+
+    @Override
+    public String obtenerDescripcionCompleta() {
+        return "Asignatura: " + getNombre() + "\n" +
+               "Número de calificaciones registradas: " + (getCalificaciones() != null ? getCalificaciones().size() : 0) + "\n" +
+               "Promedio actual: " + String.format("%.2f", promedio());
+    }
+
+    @Override
+    public String obtenerResumen() {
+        // This is similar to its current toString().
+        return getNombre(); 
     }
 }

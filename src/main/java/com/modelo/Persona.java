@@ -1,13 +1,14 @@
 package com.modelo;
 
-import java.util.ArrayList;
+// No specific ArrayList needed here unless it's for a field, which it isn't.
+// import java.util.ArrayList; 
 
-public class Persona {
+public abstract class Persona implements Descriptible { // Made abstract as Persona itself shouldn't be instantiated directly
     private String nombre;
     private int edad;
     private int cedula;
     private int codigo;
-    private String tipo;
+    private String tipo; // e.g., "Estudiante", "Profesor"
 
     public Persona() {
     }
@@ -23,11 +24,11 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "nombre: " + getNombre() 
-                + ", edad: " + getEdad() 
-                + ", cedula: " + getCedula() 
-                + ", codigo: " + getCodigo() 
-                + ", codigo: " + getTipo();
+        return "Nombre: " + getNombre() 
+                + ", Edad: " + getEdad() 
+                + ", Cédula: " + getCedula() 
+                + ", Código: " + getCodigo() 
+                + ", Tipo: " + getTipo(); // Corrected duplicate label
     }
 
     /**
@@ -99,7 +100,18 @@ public class Persona {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
-    
-}
 
+    @Override
+    public String obtenerDescripcionCompleta() {
+        return "Nombre: " + getNombre() + 
+               ", Edad: " + getEdad() + 
+               ", Cédula: " + getCedula() + 
+               ", Código: " + getCodigo() + 
+               ", Tipo: " + getTipo();
+    }
+
+    @Override
+    public String obtenerResumen() {
+        return getNombre() + " (Cód: " + getCodigo() + ")";
+    }
+}
