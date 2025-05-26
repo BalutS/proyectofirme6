@@ -18,7 +18,7 @@ public class Calificacion {
 
     @Override
     public String toString() {
-        return getNombre() + "{" + "nota:" + getNota() + ", periodo:" + getPeriodo() + ", fecha:" + getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + '}';
+        return getNombre() + "{" + "nota:" + getNota() + ", periodo:" + getPeriodo() + ", fecha:" + (getFecha() != null ? getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : "N/A") + '}';
     }
 
     /**
