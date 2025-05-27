@@ -1,7 +1,7 @@
 package com.modelo;
 
 import java.util.ArrayList;
-import java.util.Iterator; // Required for safe removal during iteration
+import java.util.Iterator; 
 
 public class Colegio {
     private static Colegio instancia;
@@ -26,7 +26,6 @@ public class Colegio {
     
     public static Colegio getInstance() {
         if (instancia == null) {
-            // Consider making this configurable or throwing an error if not initialized with a name
             instancia = new Colegio("Nombre de Colegio por Defecto"); 
         }
         return instancia;
@@ -185,8 +184,6 @@ public class Colegio {
         return sb.toString();
     }
 
-    // --- DELETION METHODS ---
-
     public boolean eliminarEstudiante(int codigo) {
         Iterator<Persona> iterator = personas.iterator();
         while (iterator.hasNext()) {
@@ -197,7 +194,7 @@ public class Colegio {
                 if (cursoDelEstudiante != null && cursoDelEstudiante.getEstudiantes() != null) {
                     cursoDelEstudiante.getEstudiantes().remove(estudiante);
                 }
-                iterator.remove(); // Remove from personas list
+                iterator.remove(); 
                 return true;
             }
         }
@@ -214,7 +211,7 @@ public class Colegio {
                 if (cursoDelProfesor != null) {
                     cursoDelProfesor.setProfesor(null);
                 }
-                iterator.remove(); // Remove from personas list
+                iterator.remove(); 
                 return true;
             }
         }
@@ -231,14 +228,14 @@ public class Colegio {
                     for (Estudiante estudiante : curso.getEstudiantes()) {
                         estudiante.setCurso(null);
                     }
-                    curso.getEstudiantes().clear(); // Clear the list in the course being deleted
+                    curso.getEstudiantes().clear(); 
                 }
                 // Unassign professor from this course
                 if (curso.getProfesor() != null) {
                     curso.getProfesor().setCurso(null);
                     curso.setProfesor(null);
                 }
-                iterator.remove(); // Remove course from colegio's list
+                iterator.remove(); 
                 return true;
             }
         }
@@ -252,13 +249,13 @@ public class Colegio {
             Asignatura currentAsignatura = iteratorAsignaturas.next();
             if (currentAsignatura.getNombre().equalsIgnoreCase(nombreAsignatura)) {
                 asignaturaAEliminar = currentAsignatura;
-                iteratorAsignaturas.remove(); // Remove from colegio's main list
+                iteratorAsignaturas.remove(); 
                 break; 
             }
         }
 
         if (asignaturaAEliminar == null) {
-            return false; // Asignatura not found in colegio's list
+            return false; 
         }
 
         // Remove from all Courses
@@ -277,10 +274,9 @@ public class Colegio {
                 }
             }
         }
-        return true; // Asignatura found and removed
+        return true; 
     }
 
-    // --- GETTERS AND SETTERS ---
     public String getNombre() {
         return nombre;
     }

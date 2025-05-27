@@ -71,7 +71,6 @@ public class Curso implements Descriptible {
     
     @Override
     public String toString() {
-        // For JComboBox display, as per requirements.
         return "Grado: " + grado + " Grupo: " + grupo;
     }
 
@@ -94,19 +93,6 @@ public class Curso implements Descriptible {
         return null;
     }
     
-    /*
-    // Asignatura does not have a 'codigo' field. Commenting out for now.
-    // This method might be needed if Asignatura gets a unique code later.
-    public Asignatura buscarAsignaturaPorCodigo(int codigo) {
-        if (this.asignaturas == null) return null;
-        for (Asignatura asig : asignaturas) {
-            // if (asig.getCodigo() == codigo) { // Asignatura has no getCodigo()
-            //    return asig;
-            // }
-        }
-        return null;
-    }
-    */
 
     public int getGrado() {
         return grado;
@@ -126,7 +112,7 @@ public class Curso implements Descriptible {
 
     public ArrayList<Estudiante> getEstudiantes() {
         if (this.estudiantes == null) {
-            this.estudiantes = new ArrayList<>(); // Defensive initialization
+            this.estudiantes = new ArrayList<>(); 
         }
         return estudiantes;
     }
@@ -142,10 +128,6 @@ public class Curso implements Descriptible {
     public boolean setProfesor(Profesor profesor) {
         if (this.profesor == null) {
             this.profesor = profesor;
-            // Optionally, set this course on the profesor object too for bidirectional link
-            // if (profesor != null && profesor.getCurso() != this) {
-            //     profesor.setCurso(this);
-            // }
             return true;
         }
         return false; 
@@ -153,7 +135,7 @@ public class Curso implements Descriptible {
 
     public ArrayList<Asignatura> getAsignaturas() {
         if (this.asignaturas == null) {
-            this.asignaturas = new ArrayList<>(); // Defensive initialization
+            this.asignaturas = new ArrayList<>(); 
         }
         return asignaturas;
     }
@@ -169,23 +151,11 @@ public class Curso implements Descriptible {
         sb.append("Profesor: ").append(getProfesor() != null ? getProfesor().getNombre() : "No asignado").append("\n");
         sb.append(getEstudiantes() != null ? getEstudiantes().size() : 0).append(" estudiantes inscritos.\n");
         sb.append("Asignaturas: ").append(getAsignaturas() != null ? getAsignaturas().size() : 0);
-        // Optionally, list asignatura names:
-        // if (getAsignaturas() != null && !getAsignaturas().isEmpty()) {
-        //     sb.append(" (");
-        //     for (int i = 0; i < getAsignaturas().size(); i++) {
-        //         sb.append(getAsignaturas().get(i).getNombre());
-        //         if (i < getAsignaturas().size() - 1) {
-        //             sb.append(", ");
-        //         }
-        //     }
-        //     sb.append(")");
-        // }
         return sb.toString();
     }
 
     @Override
     public String obtenerResumen() {
-        // This is similar to its current toString().
         return "Curso " + getGrado() + "-" + getGrupo(); 
     }
 }

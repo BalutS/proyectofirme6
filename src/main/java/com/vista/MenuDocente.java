@@ -5,13 +5,13 @@ import com.modelo.Curso;
 import com.modelo.Estudiante;
 import com.modelo.Asignatura;
 import com.modelo.Profesor;
-import com.modelo.Colegio; // Added for btnCerrarSesion
+import com.modelo.Colegio; 
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List; // Retained though ArrayList is more specific below
+import java.util.List; 
 import java.util.ArrayList;
 
 public class MenuDocente extends javax.swing.JFrame {
@@ -21,20 +21,17 @@ public class MenuDocente extends javax.swing.JFrame {
     private JComboBox<Asignatura> cmbAsignaturas;
     private JButton btnAgregarCalificacion;
     private JButton btnCerrarSesion;
-    // Optional buttons, not implemented in this step
-    // private JButton btnModificarCalificacion;
-    // private JButton btnEliminarCalificacion;
+
 
     public MenuDocente(ControladorDocente controlador) {
         this.controlador = controlador;
-        initComponents(); // Initialize components first
-        configurarVentana(); // Then configure window properties
-        cargarDatosProfesor(); // Load data based on controller
-        configurarEventos(); // Finally, set up event listeners
+        initComponents(); 
+        configurarVentana(); 
+        cargarDatosProfesor(); 
+        configurarEventos(); 
     }
 
     private void initComponents() {
-        // Initialize components (fields are already declared)
         areaInfoCursoEstudiantes = new JTextArea();
         areaInfoCursoEstudiantes.setEditable(false);
         areaInfoCursoEstudiantes.setMargin(new Insets(10, 10, 10, 10));
@@ -45,11 +42,9 @@ public class MenuDocente extends javax.swing.JFrame {
         btnAgregarCalificacion = new JButton("Agregar Calificación");
         btnCerrarSesion = new JButton("Cerrar Sesión");
 
-        // Create JLabels for the controls
         JLabel lblEstudiante = new JLabel("Estudiante:");
         JLabel lblAsignatura = new JLabel("Asignatura:");
 
-        // GroupLayout setup
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setAutoCreateGaps(true);
@@ -67,18 +62,15 @@ public class MenuDocente extends javax.swing.JFrame {
                 .addComponent(cmbAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18)
                 .addComponent(btnAgregarCalificacion)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)) // Pushes to left
-            .addComponent(scrollPaneInfo) // Spans full width
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup() // For btnCerrarSesion
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)) 
+            .addComponent(scrollPaneInfo) 
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup() 
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion))
         );
         
-        // Ensure btnAgregarCalificacion and btnCerrarSesion have reasonable minimum sizes if needed
-        // layout.linkSize(SwingConstants.HORIZONTAL, btnAgregarCalificacion, btnCerrarSesion);
 
 
-        // Vertical Group
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(lblEstudiante)
@@ -86,16 +78,12 @@ public class MenuDocente extends javax.swing.JFrame {
                 .addComponent(lblAsignatura)
                 .addComponent(cmbAsignaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(btnAgregarCalificacion))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) // Gap
-            .addComponent(scrollPaneInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE) // Main area, grows
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) // Gap
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) 
+            .addComponent(scrollPaneInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE) 
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) 
             .addComponent(btnCerrarSesion)
         );
         
-        // pack(); // pack() is called after this in the constructor sequence via configurarVentana -> setSize
-                 // Actually, setSize is in configurarVentana, pack() is not explicitly called there.
-                 // It's better to call pack() here or in the constructor after all setup.
-                 // For this refactor, let's add pack() at the end of initComponents.
         pack(); 
     }
 
@@ -106,8 +94,7 @@ public class MenuDocente extends javax.swing.JFrame {
             setTitle("Menú Docente - Profesor no encontrado");
         }
         setSize(800, 600);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // EXIT_ON_CLOSE closes the whole app
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // DISPOSE_ON_CLOSE is better for sub-menus
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
         setLocationRelativeTo(null);
     }
 
@@ -121,27 +108,26 @@ public class MenuDocente extends javax.swing.JFrame {
         }
 
         Curso curso = profesor.getCurso();
-        areaInfoCursoEstudiantes.setText("Profesor: " + profesor.getInfoCompleta() + "\n\n"); // Using getInfoCompleta
+        areaInfoCursoEstudiantes.setText("Profesor: " + profesor.getInfoCompleta() + "\n\n"); 
 
         if (curso == null) {
             areaInfoCursoEstudiantes.append("No tiene un curso asignado actualmente.");
             disableInteraction();
         } else {
-            areaInfoCursoEstudiantes.append("Curso Asignado: " + curso.toString() + "\n\n"); // Curso.toString() for grade and group
+            areaInfoCursoEstudiantes.append("Curso Asignado: " + curso.toString() + "\n\n"); 
             areaInfoCursoEstudiantes.append("--- Estudiantes del Curso ---\n" + controlador.listarEstudiantesEnCurso());
 
             cmbEstudiantes.removeAllItems();
             if (curso.getEstudiantes() != null && !curso.getEstudiantes().isEmpty()) {
                 for (Estudiante est : curso.getEstudiantes()) {
-                    cmbEstudiantes.addItem(est); // Relies on Estudiante.toString()
+                    cmbEstudiantes.addItem(est); 
                 }
-                // Trigger selection of first student to populate asignaturas
                 if (cmbEstudiantes.getItemCount() > 0) {
                     cmbEstudiantes.setSelectedIndex(0); 
                 }
             } else {
                  areaInfoCursoEstudiantes.append("\nNo hay estudiantes matriculados en este curso.");
-                 disableStudentSpecificInteraction(); // Disable only student-specific parts
+                 disableStudentSpecificInteraction(); 
             }
             enableInteraction();
         }
@@ -154,15 +140,13 @@ public class MenuDocente extends javax.swing.JFrame {
     }
 
     private void disableStudentSpecificInteraction() {
-        // cmbEstudiantes might still be enabled to show "no students" or similar
         cmbAsignaturas.setEnabled(false);
         btnAgregarCalificacion.setEnabled(false);
-        cmbAsignaturas.removeAllItems(); // Clear asignaturas if no student or no asignaturas for student
+        cmbAsignaturas.removeAllItems(); 
     }
     
     private void enableInteraction() {
         cmbEstudiantes.setEnabled(true);
-        // Asignaturas and button are enabled based on student selection
     }
 
 
@@ -175,17 +159,15 @@ public class MenuDocente extends javax.swing.JFrame {
                 if (seleccionado != null) {
                     if (seleccionado.getAsignaturas() != null && !seleccionado.getAsignaturas().isEmpty()) {
                         for (Asignatura asig : seleccionado.getAsignaturas()) {
-                            cmbAsignaturas.addItem(asig); // Relies on Asignatura.toString()
+                            cmbAsignaturas.addItem(asig); 
                         }
                         cmbAsignaturas.setEnabled(true);
                         btnAgregarCalificacion.setEnabled(true);
                     } else {
-                        // No asignaturas for this student
                         cmbAsignaturas.setEnabled(false);
                         btnAgregarCalificacion.setEnabled(false);
                     }
                 } else {
-                     // No student selected or cmbEstudiantes is empty
                     cmbAsignaturas.setEnabled(false);
                     btnAgregarCalificacion.setEnabled(false);
                 }
@@ -205,20 +187,14 @@ public class MenuDocente extends javax.swing.JFrame {
                     return;
                 }
                 
-                // Create and show the FormularioCalificacion
                 FormularioCalificacion formCalificacion = new FormularioCalificacion(
-                    MenuDocente.this, // Parent frame
-                    controlador,      // ControladorDocente instance
-                    estSeleccionado,  // Selected Estudiante
-                    asigSeleccionada  // Selected Asignatura
+                    MenuDocente.this, 
+                    controlador,      
+                    estSeleccionado,  
+                    asigSeleccionada  
                 );
                 formCalificacion.setVisible(true);
 
-                // Optional: Refresh data if needed after form closes.
-                // For example, if MenuDocente displayed averages that might change:
-                // cargarDatosProfesor(); // This would re-fetch and re-display data.
-                // For now, this is not strictly necessary as changes are self-contained
-                // within the grading process and not directly reflected as averages in MenuDocente's current UI.
             }
         });
 
@@ -226,20 +202,14 @@ public class MenuDocente extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MenuDocente.this.dispose();
-                // Principal needs to be instantiated. Assuming Principal's constructor initializes Colegio.
-                // If Colegio needs to be passed, Principal's constructor should accept it.
-                // For now, using the default constructor of Principal which internally calls Colegio.getInstance().
                 Principal principal = new Principal(); 
                 principal.setVisible(true);
             }
         });
         
-        // Manually trigger the action listener for the initially selected student (if any)
-        // to populate the asignaturas combo box.
         if (cmbEstudiantes.getItemCount() > 0) {
-            cmbEstudiantes.setSelectedIndex(0); // This will trigger its ActionListener
+            cmbEstudiantes.setSelectedIndex(0); 
         } else {
-            // Ensure dependent combos are disabled if no students initially
             cmbAsignaturas.setEnabled(false);
             btnAgregarCalificacion.setEnabled(false);
         }

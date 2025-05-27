@@ -1,14 +1,12 @@
 package com.modelo;
 
-// No specific ArrayList needed here unless it's for a field, which it isn't.
-// import java.util.ArrayList; 
 
-public abstract class Persona implements Descriptible { // Made abstract as Persona itself shouldn't be instantiated directly
+public abstract class Persona implements Descriptible { 
     private String nombre;
     private int edad;
     private int cedula;
     private int codigo;
-    private String tipo; // e.g., "Estudiante", "Profesor"
+    private String tipo; 
 
     public Persona() {
     }
@@ -28,7 +26,7 @@ public abstract class Persona implements Descriptible { // Made abstract as Pers
                 + ", Edad: " + getEdad() 
                 + ", Cédula: " + getCedula() 
                 + ", Código: " + getCodigo() 
-                + ", Tipo: " + getTipo(); // Corrected duplicate label
+                + ", Tipo: " + getTipo(); 
     }
 
     /**

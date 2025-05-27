@@ -5,7 +5,6 @@
 package com.vista;
 
 import com.controlador.ControladorAdmin;
-// import com.modelo.Colegio; // Colegio not directly used.
 import com.modelo.Curso;
 import com.modelo.Estudiante;
 import java.awt.Frame;
@@ -21,28 +20,21 @@ public class FormularioEstudiante extends javax.swing.JDialog {
     private ControladorAdmin controlador;
 
   public FormularioEstudiante(Frame parent, ControladorAdmin controlador) {
-    super(parent, "Agregar Estudiante", true); // Set title
+    super(parent, "Agregar Estudiante", true); 
     this.controlador = controlador;
     initComponents();
-    // Action listeners are set directly in initComponents for NetBeans generated code,
-    // or can be explicitly added here if not.
-    // btnGuardar.addActionListener(e -> btnGuardarActionPerformed(e)); // Already set by Netbeans form
-    // btnCancelar.addActionListener(e -> btnCancelarActionPerformed(e)); // Already set by Netbeans form
     cargarCursos();
     configurarComponentes();
-    this.setLocationRelativeTo(parent); // Center dialog
+    this.setLocationRelativeTo(parent); 
 }
 
     private void cargarCursos() {
         cmbCursos.removeAllItems();
         if (controlador != null && controlador.getCursos() != null && !controlador.getCursos().isEmpty()) {
             for (Curso curso : controlador.getCursos()) {
-                cmbCursos.addItem(curso); // Relies on Curso.toString()
+                cmbCursos.addItem(curso); 
             }
         } else {
-            // Optionally, add a placeholder or disable if no courses
-            // cmbCursos.addItem(null); // Or a string like "No hay cursos disponibles"
-            // cmbCursos.setEnabled(false);
         }
     }
 
@@ -69,29 +61,25 @@ public class FormularioEstudiante extends javax.swing.JDialog {
             int edad = Integer.parseInt(edadStr);
             int cedula = Integer.parseInt(cedulaStr);
             int codigo = Integer.parseInt(codigoStr);
-            Curso cursoSeleccionado = (Curso) cmbCursos.getSelectedItem(); // Can be null if no course selected or no courses available
+            Curso cursoSeleccionado = (Curso) cmbCursos.getSelectedItem(); 
 
             if (edad <= 0 || cedula <= 0 || codigo <= 0) {
                  JOptionPane.showMessageDialog(this, "Edad, cédula y código deben ser números positivos.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
-            // Check if codigo already exists for any Persona
             if (controlador.buscarEstudiante(codigo) != null || controlador.buscarProfesor(codigo) != null) {
                 JOptionPane.showMessageDialog(this, "El código ingresado ya existe para otra persona.", "Error de Duplicación", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Create Estudiante with an empty list of asignaturas. Asignaturas are added later.
-            Estudiante estudiante = new Estudiante(nombre, edad, cedula, codigo, "Estudiante"); // Tipo "Estudiante"
+            Estudiante estudiante = new Estudiante(nombre, edad, cedula, codigo, "Estudiante"); 
             
             if (cursoSeleccionado != null) {
-                // If a course is selected, assign the student to this course.
-                // The agregarEstudiante method in ControladorAdmin handles adding to colegio AND to the curso's list.
                 estudiante.setCurso(cursoSeleccionado); 
             }
             
-            controlador.agregarEstudiante(estudiante); // This method should handle adding to colegio and to curso if set.
+            controlador.agregarEstudiante(estudiante); 
 
             JOptionPane.showMessageDialog(this, "Estudiante registrado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
@@ -117,10 +105,8 @@ public class FormularioEstudiante extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        // Initialize components (already declared as fields)
         lblTitulo = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
-        // lblPlaceholder1 and lblPlaceholder2 are omitted as they are not used
         lblEdad = new javax.swing.JLabel();
         lblCedula = new javax.swing.JLabel();
         lblCodigo = new javax.swing.JLabel();
@@ -136,7 +122,6 @@ public class FormularioEstudiante extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Nuevo Estudiante");
 
-        // Configure component properties
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); 
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Agregar Estudiante");
@@ -166,7 +151,6 @@ public class FormularioEstudiante extends javax.swing.JDialog {
             }
         });
 
-        // GroupLayout setup
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
@@ -174,7 +158,7 @@ public class FormularioEstudiante extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap(20, Short.MAX_VALUE) // Outer padding - leading
+                    .addContainerGap(20, Short.MAX_VALUE) 
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,7 +176,7 @@ public class FormularioEstudiante extends javax.swing.JDialog {
                             .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(20, Short.MAX_VALUE)) // Outer padding - trailing
+                    .addContainerGap(20, Short.MAX_VALUE)) 
         );
         
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnGuardar, btnCancelar});
@@ -201,7 +185,7 @@ public class FormularioEstudiante extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE) // Outer padding - top
+                .addContainerGap(20, Short.MAX_VALUE) 
                 .addComponent(lblTitulo)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -227,7 +211,7 @@ public class FormularioEstudiante extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar))
-                .addContainerGap(20, Short.MAX_VALUE)) // Outer padding - bottom
+                .addContainerGap(20, Short.MAX_VALUE)) 
         );
         pack();
     }// </editor-fold>                        
@@ -238,7 +222,6 @@ public class FormularioEstudiante extends javax.swing.JDialog {
     private javax.swing.JComboBox<Curso> cmbCursos;
     private javax.swing.JLabel lblTitulo;      
     private javax.swing.JLabel lblNombre;      
-    // lblPlaceholder1 and lblPlaceholder2 are not used.
     private javax.swing.JLabel lblEdad;        
     private javax.swing.JLabel lblCedula;      
     private javax.swing.JLabel lblCodigo;      

@@ -4,16 +4,10 @@
  */
 package com.vista;
 
-// Assuming model classes will be in com.modelo and controller classes in com.controlador
 import com.controlador.ControladorAdmin;
 import com.controlador.ControladorDocente;
 import com.controlador.ControladorEstudiante;
 import com.modelo.Colegio;
-// Unused model imports removed for now: Asignatura, Curso, Persona
-// import com.modelo.Asignatura;
-// import com.modelo.Curso;
-// import com.modelo.Persona; 
-// import java.util.ArrayList; // Not directly used here
 import javax.swing.JOptionPane;
 
 /**
@@ -23,19 +17,16 @@ import javax.swing.JOptionPane;
 public class Principal extends javax.swing.JFrame {
 
     private Colegio colegio;
-    private ControladorAdmin controladorAdmin; // Used for Admin login
+    private ControladorAdmin controladorAdmin; 
 
     public Principal() {
-        // It's better to initialize Colegio instance once and pass it around.
-        // Using getInstance() is a common pattern for singletons.
         this.colegio = Colegio.getInstance("Mi Colegio"); 
       
-        // Initialize ControladorAdmin, which might be needed for admin login or initial setup
         this.controladorAdmin = new ControladorAdmin(this.colegio); 
 
         initComponents(); 
         configurarEventos(); 
-        this.setLocationRelativeTo(null); // Center the window
+        this.setLocationRelativeTo(null); 
     }
     
     private void configurarEventos() {
@@ -46,7 +37,7 @@ public class Principal extends javax.swing.JFrame {
             try {
                 if (!"ADMIN".equals(rolSeleccionado)) {
                     String codigoStr = JOptionPane.showInputDialog(this, "Ingrese su código:");
-                    if (codigoStr == null) { // User cancelled or closed the dialog
+                    if (codigoStr == null) { 
                         return;
                     }
                     if (codigoStr.trim().isEmpty()) {
@@ -57,28 +48,20 @@ public class Principal extends javax.swing.JFrame {
                 }
 
                 boolean autenticado = false;
-                // Use ControladorAdmin for all authentications as it has access to Colegio
                 if ("ADMIN".equals(rolSeleccionado)) {
-                    // For ADMIN, typically no code is needed, or a specific admin user/pass would be checked.
-                    // Here, we assume direct access for simplicity or a predefined admin account if implemented.
-                    // If specific admin users exist, authentication logic would be needed here.
-                    // For now, direct access for "ADMIN" role.
                     autenticado = true; 
                 } else if ("DOCENTE".equals(rolSeleccionado)) {
-                    autenticado = controladorAdmin.autenticar(codigo, "Profesor"); // Use "Profesor" as type in Persona
+                    autenticado = controladorAdmin.autenticar(codigo, "Profesor"); 
                 } else if ("ESTUDIANTE".equals(rolSeleccionado)) {
-                    autenticado = controladorAdmin.autenticar(codigo, "Estudiante"); // Use "Estudiante" as type in Persona
+                    autenticado = controladorAdmin.autenticar(codigo, "Estudiante"); 
                 }
 
 
                 if (autenticado) {
-                    // JOptionPane.showMessageDialog(this, "Bienvenido " + rolSeleccionado + "!", "Acceso Exitoso", JOptionPane.INFORMATION_MESSAGE);
-                    // this.dispose(); // Dispose only after successful role-specific validation
-
                     switch (rolSeleccionado) {
                         case "ADMIN":
                             JOptionPane.showMessageDialog(this, "Bienvenido " + rolSeleccionado + "!", "Acceso Exitoso", JOptionPane.INFORMATION_MESSAGE);
-                            this.dispose(); // Dispose Principal window
+                            this.dispose(); 
                             MenuAdmin menuAdmin = new MenuAdmin(controladorAdmin); 
                             menuAdmin.setVisible(true);
                             break;
@@ -86,11 +69,10 @@ public class Principal extends javax.swing.JFrame {
                             ControladorDocente controladorDocente = new ControladorDocente(colegio, codigo);
                             if (controladorDocente.getProfesor() == null || controladorDocente.getProfesor().getCurso() == null) { 
                                 JOptionPane.showMessageDialog(this, "Docente con código " + codigo + " no encontrado o sin curso asignado.", "Error de Acceso", JOptionPane.ERROR_MESSAGE);
-                                // Do NOT dispose Principal, allow user to try again or select different role.
                                 return; 
                             }
                             JOptionPane.showMessageDialog(this, "Bienvenido " + rolSeleccionado + "!", "Acceso Exitoso", JOptionPane.INFORMATION_MESSAGE);
-                            this.dispose(); // Dispose Principal only if login and validation are successful
+                            this.dispose(); 
                             MenuDocente menuDocente = new MenuDocente(controladorDocente); 
                             menuDocente.setVisible(true);
                             break;
@@ -98,19 +80,18 @@ public class Principal extends javax.swing.JFrame {
                             ControladorEstudiante controladorEstudiante = new ControladorEstudiante(colegio, codigo);
                             if (controladorEstudiante.getEstudiante() == null) { 
                                 JOptionPane.showMessageDialog(this, "Estudiante con código " + codigo + " no encontrado.", "Error de Acceso", JOptionPane.ERROR_MESSAGE);
-                                return; // Stay on Principal
+                                return; 
                             }
                             JOptionPane.showMessageDialog(this, "Bienvenido " + rolSeleccionado + "!", "Acceso Exitoso", JOptionPane.INFORMATION_MESSAGE);
-                            this.dispose(); // Dispose Principal only if login successful
+                            this.dispose(); 
                             MenuEstudiante menuEstudiante = new MenuEstudiante(controladorEstudiante);
                             menuEstudiante.setVisible(true);
                             break;
                     }
                 } else {
-                     if (!"ADMIN".equals(rolSeleccionado)) { // Avoid showing this for admin if admin has a different auth mechanism not based on code
+                     if (!"ADMIN".equals(rolSeleccionado)) { 
                         JOptionPane.showMessageDialog(this, "Código o rol incorrecto.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
                      } else if ("ADMIN".equals(rolSeleccionado) && !autenticado) {
-                        // If there was a specific admin authentication that failed.
                         JOptionPane.showMessageDialog(this, "Error de autenticación para ADMIN.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
                      }
                 }
@@ -161,28 +142,26 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER) // Main alignment for all components
                 .addComponent(titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Title spans and is centered by parent
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    // UseaddContainerGap to center the (rolLabel + rolComboBox) group
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(rolLabel)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) // Gap between label and combo box
-                    .addComponent(rolComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE) // Preferred size for combo box
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)) // UseaddContainerGap to center
-                .addComponent(btnContinue) // Centered by parent ParallelGroup
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED) 
+                    .addComponent(rolComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE) 
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)) 
+                .addComponent(btnContinue) 
         );
 
-        // Vertical Group for jPanel1
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40) // Top padding
+                .addGap(40, 40, 40) 
                 .addComponent(titulo)
-                .addGap(50, 50, 50) // Padding between title and role selection
+                .addGap(50, 50, 50) 
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rolLabel)
                     .addComponent(rolComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30) // Padding between role selection and button
+                .addGap(30, 30, 30) 
                 .addComponent(btnContinue)
-                .addContainerGap(40, Short.MAX_VALUE) // Removed semicolon here
-        ); // Semicolon should be here, closing the setVerticalGroup method call
+                .addContainerGap(40, Short.MAX_VALUE) 
+        ); 
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -198,9 +177,6 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
                                          
-    // Removed template-generated empty action listeners for rolComboBoxActionPerformed and btnContinueActionPerformed
-    // Event handling is done in configurarEventos()
-
     /**
      * @param args the command line arguments
      */

@@ -38,7 +38,7 @@ public class Asignatura implements Descriptible {
     public float promedio(){
         float sum = 0;
         if (calificaciones == null || calificaciones.isEmpty()) {
-            return 0; // Avoid division by zero
+            return 0; 
         }
         for (Calificacion calificacion : calificaciones) {
             sum += calificacion.getNota();
@@ -48,8 +48,6 @@ public class Asignatura implements Descriptible {
 
     @Override
     public String toString() {
-        // Using only the name for JComboBox display, as per later requirements.
-        // Original: "Asignatura{" + "nombre=" + nombre + ", calificaciones=" + promedio() + '}';
         return nombre; 
     }
     
@@ -74,7 +72,7 @@ public class Asignatura implements Descriptible {
      */
     public ArrayList<Calificacion> getCalificaciones() {
         if (this.calificaciones == null) {
-            this.calificaciones = new ArrayList<>(); // Defensive initialization
+            this.calificaciones = new ArrayList<>(); 
         }
         return calificaciones;
     }
@@ -95,7 +93,6 @@ public class Asignatura implements Descriptible {
 
     @Override
     public String obtenerResumen() {
-        // This is similar to its current toString().
         return getNombre(); 
     }
 }
