@@ -1,7 +1,7 @@
 package com.controlador;
 
 import com.modelo.*;
-import java.util.ArrayList; // Added for new method
+import java.util.ArrayList; 
 import java.util.List;
 
 public class ControladorAdmin extends ControladorGeneral {
@@ -12,9 +12,7 @@ public class ControladorAdmin extends ControladorGeneral {
 
     public void agregarEstudiante(Estudiante estudiante) {
     colegio.agregarEstudiante(estudiante);
-    // Ensure curso is not null before trying to add student to it.
     if (estudiante.getCurso() != null) {
-        // Ensure the curso's student list is initialized.
         if (estudiante.getCurso().getEstudiantes() == null) {
             estudiante.getCurso().setEstudiantes(new ArrayList<>());
         }
@@ -51,7 +49,7 @@ public class ControladorAdmin extends ControladorGeneral {
         colegio.agregarEstudianteACurso(codEst, grado, grupo);
     }
 
-    public void agregarAsignatura(Asignatura asignatura) { // This seems to be a general method to add to colegio
+    public void agregarAsignatura(Asignatura asignatura) { 
         colegio.agregarAsignatura(asignatura);
     }
 
@@ -79,7 +77,7 @@ public class ControladorAdmin extends ControladorGeneral {
         return colegio.getCursos();
     }
 
-    public List<Asignatura> getAsignaturas() { // Returns from Colegio
+    public List<Asignatura> getAsignaturas() { 
         return colegio.getAsignaturas();
     }
 
@@ -89,21 +87,16 @@ public class ControladorAdmin extends ControladorGeneral {
             .anyMatch(p -> p.getCodigo() == codigo);
     }
 
-    // New method as per requirements
     public void crearAsignatura(String nombreAsignatura, Curso cursoSeleccionado) {
         Asignatura nuevaAsignatura = new Asignatura(nombreAsignatura);
         
-        // Add the new Asignatura to the Colegio's list of asignaturas
         colegio.agregarAsignatura(nuevaAsignatura); 
         
-        // Add the new Asignatura to the selected Curso's list of asignaturas
         if (cursoSeleccionado != null) {
             cursoSeleccionado.agregarAsignatura(nuevaAsignatura);
             
-            // Associate the new Asignatura with all Estudiante's currently enrolled in cursoSeleccionado
             if (cursoSeleccionado.getEstudiantes() != null) {
                 for (Estudiante estudiante : cursoSeleccionado.getEstudiantes()) {
-                    // Ensure student's asignatura list is initialized
                     if (estudiante.getAsignaturas() == null) {
                         estudiante.setAsignaturas(new ArrayList<>());
                     }
@@ -113,10 +106,9 @@ public class ControladorAdmin extends ControladorGeneral {
         }
     }
 
-    // New method as per requirements (optional but recommended)
     public boolean existeAsignaturaGlobalmente(String nombreAsignatura) {
         if (colegio.getAsignaturas() == null) {
-            return false; // No asignaturas in colegio yet
+            return false; 
         }
         for (Asignatura asig : colegio.getAsignaturas()) {
             if (asig.getNombre().equalsIgnoreCase(nombreAsignatura)) {
@@ -125,8 +117,6 @@ public class ControladorAdmin extends ControladorGeneral {
         }
         return false;
     }
-
-    // --- Deletion Wrapper Methods ---
 
     public boolean eliminarEstudiante(int codigo) {
         return colegio.eliminarEstudiante(codigo);

@@ -5,8 +5,6 @@
 package com.vista;
 
 import com.controlador.ControladorAdmin;
-// Colegio not directly used, Curso needed for JComboBox, Profesor for instantiation
-// import com.modelo.Colegio; 
 import com.modelo.Curso;
 import com.modelo.Profesor;
 import java.awt.Frame;
@@ -20,12 +18,12 @@ public class FormularioDocente extends javax.swing.JDialog {
      private ControladorAdmin controlador;
 
      public FormularioDocente(Frame parent, ControladorAdmin controlador) {
-        super(parent, "Agregar Docente", true); // Set title
+        super(parent, "Agregar Docente", true); 
         this.controlador = controlador;
         initComponents();
         cargarCursos();
         configurarComponentes();
-        this.setLocationRelativeTo(parent); // Center dialog
+        this.setLocationRelativeTo(parent); 
     }
 
     private void configurarComponentes() {
@@ -39,12 +37,10 @@ public class FormularioDocente extends javax.swing.JDialog {
     private void cargarCursos() {
         cmbCursos.removeAllItems(); 
         if (controlador.getCursos() == null || controlador.getCursos().isEmpty()) {
-            cmbCursos.addItem(null); // Add a null item or a placeholder string
-            // Consider disabling the combobox or showing a message
-            // For now, allowing null to be selected if no courses exist.
+            cmbCursos.addItem(null); 
         } else {
             for (Curso curso : controlador.getCursos()) {
-                cmbCursos.addItem(curso); // Relies on Curso.toString() for display
+                cmbCursos.addItem(curso); 
             }
         }
     }
@@ -57,7 +53,6 @@ public class FormularioDocente extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        // Initialize components (already declared as fields)
         txtNombre = new javax.swing.JTextField();
         txtEdad = new javax.swing.JTextField();
         txtCedula = new javax.swing.JTextField();
@@ -75,7 +70,6 @@ public class FormularioDocente extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Nuevo Docente");
 
-        // Configure component properties
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); 
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Agregar Docente");
@@ -100,14 +94,13 @@ public class FormularioDocente extends javax.swing.JDialog {
             }
         });
 
-        // GroupLayout setup
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE) // Outer padding
+                .addContainerGap(20, Short.MAX_VALUE) 
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTitulo, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -128,11 +121,10 @@ public class FormularioDocente extends javax.swing.JDialog {
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55,55,55))) // Adjust to center buttons if needed based on total width
-                .addContainerGap(20, Short.MAX_VALUE)) // Outer padding
+                        .addGap(55,55,55))) 
+                .addContainerGap(20, Short.MAX_VALUE)) 
         );
         
-        // Make labels right-aligned for better visual connection to fields
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblEdad.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCedula.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -143,9 +135,9 @@ public class FormularioDocente extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE) // Outer padding
+                .addContainerGap(20, Short.MAX_VALUE) 
                 .addComponent(lblTitulo)
-                .addGap(18, 18, 18) // Gap after title
+                .addGap(18, 18, 18) 
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -165,11 +157,11 @@ public class FormularioDocente extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCurso)
                     .addComponent(cmbCursos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25) // Gap before buttons
+                .addGap(25, 25, 25) 
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar))
-                .addContainerGap(20, Short.MAX_VALUE)) // Outer padding
+                .addContainerGap(20, Short.MAX_VALUE)) 
         );
         pack();
     }// </editor-fold>                        
@@ -186,7 +178,7 @@ public class FormularioDocente extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-             if (cursoSeleccionado == null && cmbCursos.getItemCount() > 0) { // Check if null only if courses were available
+             if (cursoSeleccionado == null && cmbCursos.getItemCount() > 0) { 
                 JOptionPane.showMessageDialog(this, "Debe seleccionar un curso.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -201,19 +193,16 @@ public class FormularioDocente extends javax.swing.JDialog {
                 return;
             }
             
-            // Check if codigo already exists
             if (controlador.buscarProfesor(codigo) != null || controlador.buscarEstudiante(codigo) != null) {
                  JOptionPane.showMessageDialog(this, "El código ingresado ya existe para otra persona.", "Error de Duplicación", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
 
-            // Create Profesor without course initially
-            Profesor profesor = new Profesor(nombre, edad, cedula, codigo, "Profesor"); // Tipo "Profesor"
-            controlador.agregarProfesor(profesor); // Adds to Colegio's general list
+            Profesor profesor = new Profesor(nombre, edad, cedula, codigo, "Profesor"); 
+            controlador.agregarProfesor(profesor); 
 
             if (cursoSeleccionado != null) {
-                // Assign course to professor and professor to course
                 controlador.asignarCursoAProfesor(codigo, cursoSeleccionado.getGrado(), cursoSeleccionado.getGrupo());
             }
 

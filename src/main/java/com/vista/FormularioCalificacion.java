@@ -3,10 +3,7 @@ package com.vista;
 import com.controlador.ControladorDocente;
 import com.modelo.Estudiante;
 import com.modelo.Asignatura;
-// Calificacion class is used for creating the object, but not passed directly to the current controller method signature.
-// However, the controller method *will* create a Calificacion object.
-// The Profesor's calificarEstudiante method *does* take individual fields to create Calificacion.
-// import com.modelo.Calificacion; 
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +21,7 @@ public class FormularioCalificacion extends JDialog {
     private JTextField txtNombreCalificacion;
     private JTextField txtNota;
     private JTextField txtPeriodo;
-    private JTextField txtFecha; // For date input, e.g., "dd/MM/yyyy"
+    private JTextField txtFecha; 
     private JButton btnGuardar;
     private JButton btnCancelar;
 
@@ -40,21 +37,19 @@ public class FormularioCalificacion extends JDialog {
         configurarEventos();
         pack();
         setLocationRelativeTo(parent);
-        setResizable(false); // Optional: prevent resizing
+        setResizable(false); 
     }
 
     private void initComponents() {
-        // Initialize fields (already declared)
         txtNombreCalificacion = new JTextField(20);
         txtNota = new JTextField(5);
         txtPeriodo = new JTextField(5);
         txtFecha = new JTextField(10);
-        txtFecha.setText(LocalDate.now().format(DATE_FORMATTER)); // Default to current date
+        txtFecha.setText(LocalDate.now().format(DATE_FORMATTER)); 
         
         btnGuardar = new JButton("Guardar");
         btnCancelar = new JButton("Cancelar");
 
-        // Create JLabels for the form
         JLabel lblNombreActividad = new JLabel("Nombre Actividad:");
         lblNombreActividad.setHorizontalAlignment(SwingConstants.RIGHT);
         JLabel lblNota = new JLabel("Nota (0.0 - 5.0):");
@@ -64,7 +59,6 @@ public class FormularioCalificacion extends JDialog {
         JLabel lblFecha = new JLabel("Fecha (dd/MM/yyyy):");
         lblFecha.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        // GroupLayout setup
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
@@ -106,7 +100,7 @@ public class FormularioCalificacion extends JDialog {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(lblFecha)
                 .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(25) // Gap before buttons
+            .addGap(25) 
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnGuardar)
                 .addComponent(btnCancelar))
@@ -135,7 +129,6 @@ public class FormularioCalificacion extends JDialog {
         String periodoStr = txtPeriodo.getText().trim();
         String fechaStr = txtFecha.getText().trim();
 
-        // Validation
         if (nombreActividad.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El nombre de la actividad no puede estar vacío.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
             txtNombreCalificacion.requestFocus();
@@ -159,7 +152,7 @@ public class FormularioCalificacion extends JDialog {
         int periodo;
         try {
             periodo = Integer.parseInt(periodoStr);
-            if (periodo < 1 || periodo > 4) { // Assuming 4 periods
+            if (periodo < 1 || periodo > 4) { 
                 JOptionPane.showMessageDialog(this, "El periodo debe ser un número entre 1 y 4.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
                 txtPeriodo.requestFocus();
                 return;
@@ -179,13 +172,11 @@ public class FormularioCalificacion extends JDialog {
             return;
         }
 
-        // If validation passes:
         try {
-            // The existing ControladorDocente.calificarEstudiante takes these exact parameters
             controladorDocente.calificarEstudiante(
                 estudiante.getCodigo(), 
                 asignatura.getNombre(), 
-                nombreActividad, // This is the 'nombreCalificacion' parameter
+                nombreActividad, 
                 nota, 
                 periodo, 
                 fecha
@@ -197,7 +188,7 @@ public class FormularioCalificacion extends JDialog {
              JOptionPane.showMessageDialog(this, "Error al guardar calificación: " + ex.getMessage(), "Error del Sistema", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Un error inesperado ocurrió: " + ex.getMessage(), "Error Inesperado", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace(); // For debugging
+            ex.printStackTrace(); 
         }
     }
 }

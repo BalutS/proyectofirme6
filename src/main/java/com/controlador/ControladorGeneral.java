@@ -1,7 +1,7 @@
 package com.controlador;
 
 import com.modelo.Colegio;
-import com.modelo.Persona; // Explicit import for clarity
+import com.modelo.Persona; 
 
 public class ControladorGeneral {
     protected Colegio colegio;
@@ -18,7 +18,7 @@ public class ControladorGeneral {
      */
     public boolean autenticar(int codigo, String tipo) {
         if (colegio == null || colegio.getPersonas() == null) {
-            return false; // Colegio or personas list not initialized
+            return false; 
         }
         for (Persona p : colegio.getPersonas()) {
             if (p.getCodigo() == codigo && p.getTipo().equalsIgnoreCase(tipo)) {

@@ -9,7 +9,6 @@ public class ControladorEstudiante extends ControladorGeneral {
         super(colegio);
         this.estudiante = colegio.buscarEstudiante(codigoEstudiante);
         if (this.estudiante == null) {
-            // Consider throwing an exception or logging if student not found
             System.err.println("Advertencia: Estudiante con código " + codigoEstudiante + " no encontrado.");
         }
     }

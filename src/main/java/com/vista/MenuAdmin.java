@@ -11,15 +11,15 @@ public class MenuAdmin extends javax.swing.JFrame {
 
     private JLabel jLabel1; 
     private JLabel titulo;  
-    private JButton jButton1; // "Agregar Docente"
-    private JButton jButton2; // "Agregar Estudiante"
+    private JButton jButton1; 
+    private JButton jButton2; 
     private JButton btnListarDocentes;
     private JButton btnListarEstudiantes;
     private JButton btnCerrarSesion;
     private JButton btnCrearCurso;
     private JButton btnCrearAsignatura;
     private JButton btnEliminarEstudiante;
-    private JButton btnEliminarProfesor; // This is "Eliminar Docente"
+    private JButton btnEliminarProfesor; 
     private JButton btnEliminarCurso;
     private JButton btnEliminarAsignatura;
     private JButton btnGenerarReporteEstudiante;
@@ -27,7 +27,6 @@ public class MenuAdmin extends javax.swing.JFrame {
     public MenuAdmin() {
         initComponents();
         configurarEventos(); 
-        // setLocationRelativeTo(null); // Done in constructor after pack
     }
 
     public MenuAdmin(ControladorAdmin controlador) {
@@ -38,14 +37,14 @@ public class MenuAdmin extends javax.swing.JFrame {
     }
 
     private void configurarEventos() {
-        if (jButton1 != null) { // Agregar Docente
+        if (jButton1 != null) { 
             jButton1.addActionListener(e -> {
                 if (this.controlador == null) { JOptionPane.showMessageDialog(this, "Controlador no inicializado.", "Error", JOptionPane.ERROR_MESSAGE); return; }
                 FormularioDocente formDocente = new FormularioDocente(this, controlador);
                 formDocente.setVisible(true);
             });
         }
-        if (jButton2 != null) { // Agregar Estudiante
+        if (jButton2 != null) { 
             jButton2.addActionListener(e -> {
                 if (this.controlador == null) { JOptionPane.showMessageDialog(this, "Controlador no inicializado.", "Error", JOptionPane.ERROR_MESSAGE); return; }
                 FormularioEstudiante formEstudiante = new FormularioEstudiante(this, controlador);
@@ -119,7 +118,7 @@ public class MenuAdmin extends javax.swing.JFrame {
                 }
             });
         }
-        if (btnEliminarProfesor != null) { // "Eliminar Docente"
+        if (btnEliminarProfesor != null) { 
             btnEliminarProfesor.addActionListener(e -> {
                  if (this.controlador == null) { return; }
                 String codigoStr = JOptionPane.showInputDialog(this, "Ingrese el código del docente a eliminar:", "Eliminar Docente", JOptionPane.QUESTION_MESSAGE);
@@ -142,7 +141,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         if (btnEliminarCurso != null) {
             btnEliminarCurso.addActionListener(e -> {
                 if (this.controlador == null) { return; }
-                // ... (rest of the logic is the same)
                 String gradoStr = JOptionPane.showInputDialog(this, "Ingrese el grado del curso a eliminar:", "Eliminar Curso - Grado", JOptionPane.QUESTION_MESSAGE);
                 if (gradoStr == null) return;
                 if (gradoStr.trim().isEmpty()) { JOptionPane.showMessageDialog(this, "El grado no puede estar vacío.", "Error de Validación", JOptionPane.ERROR_MESSAGE); return; }
@@ -165,7 +163,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         if (btnEliminarAsignatura != null) {
             btnEliminarAsignatura.addActionListener(e -> {
                 if (this.controlador == null) { return; }
-                // ... (rest of the logic is the same)
                 String nombreAsignatura = JOptionPane.showInputDialog(this, "Ingrese el nombre de la asignatura a eliminar:", "Eliminar Asignatura", JOptionPane.QUESTION_MESSAGE);
                 if (nombreAsignatura != null && !nombreAsignatura.trim().isEmpty()) {
                     if (controlador.eliminarAsignatura(nombreAsignatura.trim())) {
@@ -181,7 +178,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         if (btnGenerarReporteEstudiante != null) {
             btnGenerarReporteEstudiante.addActionListener(e -> {
                 if (this.controlador == null) { return; }
-                // ... (rest of the logic is the same)
                 String codigoStr = JOptionPane.showInputDialog(this, "Ingrese el código del estudiante para generar el reporte:", "Generar Reporte Académico", JOptionPane.QUESTION_MESSAGE);
                 if (codigoStr != null && !codigoStr.trim().isEmpty()) {
                     try {
@@ -253,7 +249,6 @@ public class MenuAdmin extends javax.swing.JFrame {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
-        // Horizontal Group
         layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
             .addComponent(titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -279,7 +274,6 @@ public class MenuAdmin extends javax.swing.JFrame {
             .addComponent(btnCerrarSesion, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         
-        // Link sizes of all main action buttons for a more uniform grid
         layout.linkSize(SwingConstants.HORIZONTAL, new java.awt.Component[] {
             jButton1, jButton2, btnCrearCurso, btnCrearAsignatura,
             btnListarDocentes, btnListarEstudiantes, btnGenerarReporteEstudiante, 
@@ -287,11 +281,10 @@ public class MenuAdmin extends javax.swing.JFrame {
         });
 
 
-        // Vertical Group
         layout.setVerticalGroup(layout.createSequentialGroup()
             .addComponent(titulo)
             .addComponent(jLabel1)
-            .addGap(20) // Space after titles
+            .addGap(20) 
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jButton1)
                 .addComponent(jButton2)
@@ -302,13 +295,12 @@ public class MenuAdmin extends javax.swing.JFrame {
                 .addComponent(btnListarDocentes)
                 .addComponent(btnListarEstudiantes)
                 .addComponent(btnGenerarReporteEstudiante)
-                .addComponent(btnEliminarAsignatura)) // Swapped for better balance with 3rd row
+                .addComponent(btnEliminarAsignatura)) 
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(btnEliminarProfesor)
                 .addComponent(btnEliminarEstudiante)
                 .addComponent(btnEliminarCurso))
-            // Add more space before Cerrar Sesion
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE) 
             .addComponent(btnCerrarSesion)
         );
