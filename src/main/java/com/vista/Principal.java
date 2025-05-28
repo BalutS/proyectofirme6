@@ -7,7 +7,20 @@ package com.vista;
 import com.controlador.ControladorAdmin;
 import com.controlador.ControladorDocente;
 import com.controlador.ControladorEstudiante;
-import com.modelo.Colegio;
+// Colegio import is removed as it's no longer a field here. DAOs will handle Colegio.getInstance().
+// import com.modelo.Colegio; 
+
+import com.dao.AsignaturaDAO;
+import com.dao.CalificacionDAO;
+import com.dao.CursoDAO;
+import com.dao.EstudianteDAO;
+import com.dao.ProfesorDAO;
+import com.dao.impl.AsignaturaDaoImpl;
+import com.dao.impl.CalificacionDaoImpl;
+import com.dao.impl.CursoDaoImpl;
+import com.dao.impl.EstudianteDaoImpl;
+import com.dao.impl.ProfesorDaoImpl;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -16,14 +29,12 @@ import javax.swing.JOptionPane;
  */
 public class Principal extends javax.swing.JFrame {
 
-    private Colegio colegio;
-    private ControladorAdmin controladorAdmin; 
+    // private Colegio colegio; // Removed
+    // private ControladorAdmin controladorAdmin; // Removed, will be instantiated on demand
 
     public Principal() {
-        this.colegio = Colegio.getInstance("Mi Colegio"); 
-      
-        this.controladorAdmin = new ControladorAdmin(this.colegio); 
-
+        // this.colegio = Colegio.getInstance("Mi Colegio"); // Removed
+        // this.controladorAdmin = new ControladorAdmin(this.colegio); // Removed
         initComponents(); 
         configurarEventos(); 
         this.setLocationRelativeTo(null); 
@@ -34,6 +45,23 @@ public class Principal extends javax.swing.JFrame {
             String rolSeleccionado = (String) rolComboBox.getSelectedItem();
             int codigo = -1; 
             
+            // Instantiate DAOs here, once per login attempt.
+            EstudianteDAO estudianteDAO = new EstudianteDaoImpl();
+            ProfesorDAO profesorDAO = new ProfesorDaoImpl();
+            CursoDAO cursoDAO = new CursoDaoImpl();
+            AsignaturaDAO asignaturaDAO = new AsignaturaDaoImpl();
+            CalificacionDAO calificacionDAO = new CalificacionDaoImpl(); // Needed for ControladorDocente
+
+            // Temporary admin controller for authentication if needed by non-ADMIN roles
+            // Uses the default constructor which instantiates its own DAOs internally,
+            // or we could pass the DAOs we just created if its auth method used them.
+            // For simplicity, assuming ControladorAdmin's default constructor is fine for auth.
+            // Or better, if autenticarPersona doesn't rely on much state, it could be static,
+            // or Principal could do the simple DAO check itself.
+            // Let's use a temporary controller instance for authentication.
+            ControladorAdmin authController = new ControladorAdmin(estudianteDAO, profesorDAO, cursoDAO, asignaturaDAO);
+
+
             try {
                 if (!"ADMIN".equals(rolSeleccionado)) {
                     String codigoStr = JOptionPane.showInputDialog(this, "Ingrese su código:");
@@ -49,49 +77,57 @@ public class Principal extends javax.swing.JFrame {
 
                 boolean autenticado = false;
                 if ("ADMIN".equals(rolSeleccionado)) {
-                    autenticado = true; 
+                    autenticado = true; // Admin role doesn't require code authentication here
                 } else if ("DOCENTE".equals(rolSeleccionado)) {
-                    autenticado = controladorAdmin.autenticar(codigo, "Profesor"); 
+                    // Using the autenticarPersona method from the instantiated authController
+                    autenticado = authController.autenticarPersona(codigo, "Profesor"); 
                 } else if ("ESTUDIANTE".equals(rolSeleccionado)) {
-                    autenticado = controladorAdmin.autenticar(codigo, "Estudiante"); 
+                    autenticado = authController.autenticarPersona(codigo, "Estudiante"); 
                 }
 
 
                 if (autenticado) {
+                    // Dispose only after successful role-specific validation and menu creation
+                    // JOptionPane.showMessageDialog(this, "Bienvenido " + rolSeleccionado + "!", "Acceso Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                    
                     switch (rolSeleccionado) {
                         case "ADMIN":
                             JOptionPane.showMessageDialog(this, "Bienvenido " + rolSeleccionado + "!", "Acceso Exitoso", JOptionPane.INFORMATION_MESSAGE);
-                            this.dispose(); 
-                            MenuAdmin menuAdmin = new MenuAdmin(controladorAdmin); 
+                            this.dispose();
+                            // Create new ControladorAdmin instance with injected DAOs for the MenuAdmin
+                            ControladorAdmin adminController = new ControladorAdmin(estudianteDAO, profesorDAO, cursoDAO, asignaturaDAO);
+                            MenuAdmin menuAdmin = new MenuAdmin(adminController); 
                             menuAdmin.setVisible(true);
                             break;
                         case "DOCENTE":
-                            ControladorDocente controladorDocente = new ControladorDocente(colegio, codigo);
-                            if (controladorDocente.getProfesor() == null || controladorDocente.getProfesor().getCurso() == null) { 
+                            // Pass the already instantiated DAOs
+                            ControladorDocente docenteController = new ControladorDocente(profesorDAO, estudianteDAO, asignaturaDAO, calificacionDAO, cursoDAO, codigo);
+                            if (docenteController.getProfesor() == null || docenteController.getProfesor().getCurso() == null) { 
                                 JOptionPane.showMessageDialog(this, "Docente con código " + codigo + " no encontrado o sin curso asignado.", "Error de Acceso", JOptionPane.ERROR_MESSAGE);
                                 return; 
                             }
                             JOptionPane.showMessageDialog(this, "Bienvenido " + rolSeleccionado + "!", "Acceso Exitoso", JOptionPane.INFORMATION_MESSAGE);
                             this.dispose(); 
-                            MenuDocente menuDocente = new MenuDocente(controladorDocente); 
+                            MenuDocente menuDocente = new MenuDocente(docenteController); 
                             menuDocente.setVisible(true);
                             break;
                         case "ESTUDIANTE":
-                            ControladorEstudiante controladorEstudiante = new ControladorEstudiante(colegio, codigo);
-                            if (controladorEstudiante.getEstudiante() == null) { 
+                            // Pass the already instantiated DAOs
+                            ControladorEstudiante estudianteController = new ControladorEstudiante(estudianteDAO, cursoDAO, codigo);
+                            if (estudianteController.getEstudiante() == null) { 
                                 JOptionPane.showMessageDialog(this, "Estudiante con código " + codigo + " no encontrado.", "Error de Acceso", JOptionPane.ERROR_MESSAGE);
                                 return; 
                             }
                             JOptionPane.showMessageDialog(this, "Bienvenido " + rolSeleccionado + "!", "Acceso Exitoso", JOptionPane.INFORMATION_MESSAGE);
                             this.dispose(); 
-                            MenuEstudiante menuEstudiante = new MenuEstudiante(controladorEstudiante);
+                            MenuEstudiante menuEstudiante = new MenuEstudiante(estudianteController);
                             menuEstudiante.setVisible(true);
                             break;
                     }
                 } else {
                      if (!"ADMIN".equals(rolSeleccionado)) { 
                         JOptionPane.showMessageDialog(this, "Código o rol incorrecto.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
-                     } else if ("ADMIN".equals(rolSeleccionado) && !autenticado) {
+                     } else if ("ADMIN".equals(rolSeleccionado) && !autenticado) { 
                         JOptionPane.showMessageDialog(this, "Error de autenticación para ADMIN.", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
                      }
                 }
@@ -137,10 +173,9 @@ public class Principal extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
 
-        // Horizontal Group for jPanel1
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER) // Main alignment for all components
-                .addComponent(titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Title spans and is centered by parent
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER) 
+                .addComponent(titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) 
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(rolLabel)
